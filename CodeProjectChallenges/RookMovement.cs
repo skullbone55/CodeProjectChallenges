@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CodeProjectChallenges
-{
+{    
     public class RookMovement
     {
         //Puzzle Page
@@ -13,28 +13,20 @@ namespace CodeProjectChallenges
         //
 
         private const int BoardLayout = 9;
-
         private int[,] Board = new int[BoardLayout, BoardLayout];
-
-        private string origLoc = "";
-        private int currXPos;
-        private int currYPos;
-
+        private RookPiece RookPosition;
 
         public RookMovement(string position)
         {
-            origLoc = position;
-
-            currXPos = (int)position.Substring(0, 1).ToCharArray()[0] - 96;
-            currYPos = Convert.ToInt32(position.Substring(1, 1));
+            RookPosition = new RookPiece(position);
         }
 
         public void AddPiece(int color, string location)
         {            
-            var intX = (int)location.Substring(0, 1).ToCharArray()[0] - 96;
+            var intX = RookPiece.ConvertLetterInt(location);
             var intY = Convert.ToInt32(location.Substring(1, 1));
 
-            if ( intX == currXPos || intY == currYPos)
+            if ( intX == RookPosition.X || intY == RookPosition.Y)
             {
                 Board[intX, intY] = color + 1;
             }            
@@ -44,129 +36,123 @@ namespace CodeProjectChallenges
         {
             var chReturn = "";
 
-            chReturn = "R" + origLoc;
-            chReturn += capture ? "x" : "-";
-            chReturn += getCharValue(xPos) + yPos.ToString();
+            var charCap = capture ? "x" : "-";
+            var EndPos = RookPiece.getCharValue(xPos) + yPos.ToString();
 
+            chReturn = $"R{RookPosition.OrigId}{charCap}{EndPos}";
+            
             return chReturn;
         }
 
-        public string GetBack()
+        public void GetBack(ref List<string> stList)
         {
-            var chReturn = "";
-
-            for (int i = currXPos - 1; i > 0; i--)
+            for (int i = RookPosition.X - 1; i > 0; i--)
             {
-                if (Board[i, currYPos] == 1)
-                    return chReturn;
-                else if (Board[i, currYPos] == 2)
+                if (Board[i, RookPosition.Y] == 1)
+                    return;
+                else if (Board[i, RookPosition.Y] == 2)
                 {
-                    chReturn = GetColFormat(i, currYPos, true) + " " + chReturn;
-                    return chReturn;
+                    stList.Add(GetColFormat(i, RookPosition.Y, true));                    
+                    return;
                 }
                 else
-                    chReturn = GetColFormat(i, currYPos, false) + " " + chReturn;                
+                    stList.Add(GetColFormat(i, RookPosition.Y, false));                    
             }
-
-            chReturn = chReturn.Trim(' ');
-            return chReturn;
+            return;
         }
 
-        public string GetForward()
+        public void GetForward(ref List<string> stList)
         {
-            var chReturn = "";
-
-            for (int i = currXPos + 1; i < 9;i++)
+            for (int i = RookPosition.X + 1; i < 9;i++)
             {
-                if (Board[i, currYPos] == 1)
-                    return chReturn;
-                else if (Board[i, currYPos] == 2)
+                if (Board[i, RookPosition.Y] == 1)
+                    return;
+                else if (Board[i, RookPosition.Y] == 2)
                 {
-                    chReturn += " " + GetColFormat(i, currYPos, true);
-                    return chReturn;
+                    stList.Add(GetColFormat(i, RookPosition.Y, true));
+                    return;
                 }
                 else
-                    chReturn += " " + GetColFormat(i, currYPos, false);
+                    stList.Add(GetColFormat(i, RookPosition.Y, false));                    
             }
-            chReturn = chReturn.Trim(' ');
-            return chReturn;
+            return;
         }
 
-        public string GetUp()
+        public void GetUp(ref List<string> stList)
         {
-            var chReturn = "";
 
-            for (int i = currYPos + 1; i < 9; i++)
+            for (int i = RookPosition.Y + 1; i < 9; i++)
             {
-                if (Board[currXPos, i] == 1)
-                    return chReturn;
-                else if (Board[currXPos, i] == 2)
+                if (Board[RookPosition.X, i] == 1)
+                    return;
+                else if (Board[RookPosition.X, i] == 2)
                 {
-                    chReturn += " " + GetColFormat(currXPos, i, true);
-                    return chReturn;
+                    stList.Add(GetColFormat(RookPosition.X, i, true));
+                    return;
                 }
                 else
-                    chReturn += " " + GetColFormat(currXPos, i, false);
+                    stList.Add(GetColFormat(RookPosition.X, i, false));                    
             }
-            chReturn = chReturn.Trim(' ');
-            return chReturn;
+            return;
         }
 
-        public string GetDown()
+        public void GetDown(ref List<string> stList)
         {
-            var chReturn = "";
-
-            for (int i = currYPos - 1; i > 0; i--)
+            for (int i = RookPosition.Y - 1; i > 0; i--)
             {
-                if (Board[currXPos, i] == 1)
-                    return chReturn;
-                else if (Board[currXPos, i] == 2)
+                if (Board[RookPosition.X, i] == 1)
+                    return;
+                else if (Board[RookPosition.X, i] == 2)
                 {
-                    chReturn = GetColFormat(currXPos, i, true) + " " + chReturn;
-                    return chReturn;
+                    stList.Add(GetColFormat(RookPosition.X, i, true));
+                    return;
                 }
                 else
-                    chReturn = GetColFormat(currXPos, i, false) + " " + chReturn;
+                    stList.Add(GetColFormat(RookPosition.X, i, false));
             }
-            chReturn = chReturn.Trim(' ');
-            return chReturn;
+            return;
         }
-
-
-        private string getCharValue(int inPos)
-        {
-            switch (inPos)
-            {
-                case 1:
-                    return "a";
-                case 2:
-                    return "b";
-                case 3:
-                    return "c";
-                case 4:
-                    return "d";
-                case 5:
-                    return "e";
-                case 6:
-                    return "f";
-                case 7:
-                    return "g";
-                case 8:
-                    return "h";                    
-            }
-            return "";
-
-        }
-
-        public string GetMovements()
-        {
-            var chReturn = "";
-            chReturn = GetBack() + " " + GetDown() + " " + GetUp() + " " + GetForward();                      
-
-            return chReturn;
-        }
-
         
+        public List<string> GetMovements()
+        {
+            List<string> stList = new List<string>();
+            GetBack(ref stList);
+            GetDown(ref stList);
+            GetUp(ref stList);
+            GetForward(ref stList);
 
+            return stList;
+        }
     }
+
+    public class RookPiece
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+        public string OrigId { get; set; }
+
+        public RookPiece(string OrigId)
+        {
+            this.OrigId = OrigId;
+            this.X = ConvertLetterInt(OrigId);
+            this.Y = Convert.ToInt32(OrigId.Substring(1, 1));
+        }
+
+        public static int ConvertLetterInt(string stInput)
+        {
+            return ConvertLetterInt(stInput.Substring(0, 1).ToCharArray()[0]);
+        }
+
+        public static int ConvertLetterInt(char stInput)
+        {
+            return (int)stInput - 96;
+        }
+
+        public static string getCharValue(int inPos)
+        {
+            var stRt = (char)(inPos + 96);
+            return stRt.ToString();           
+        }
+    }
+
 }

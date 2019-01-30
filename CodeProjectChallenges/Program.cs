@@ -11,7 +11,7 @@ namespace CodeProjectChallenges
         static void Main(string[] args)
         {
             RunRook();
-
+            
         }
 
 
@@ -21,19 +21,19 @@ namespace CodeProjectChallenges
 
             List<string> stPiecies = new List<string>();
 
-            stPiecies.Add("0 c1");         
-            stPiecies.Add("1 e8");
+            stPiecies.Add("0 g5");         
+            stPiecies.Add("0 d2");
+            stPiecies.Add("1 d7");
 
             foreach (var currPiece in stPiecies)
                 rook.AddPiece( Convert.ToInt32(currPiece.Substring(0, 1)), currPiece.Substring(2));
 
-            var stAnswer = rook.GetMovements();
+            var lstAnswer = rook.GetMovements();
+            var answer = lstAnswer.OrderBy(x => x);
 
-            var arAnswer = stAnswer.Split(' ');
-            for (int x = 0; x < arAnswer.Length; x++)
-            {
-                Console.WriteLine(arAnswer[x].Trim(' '));
-            }
+            foreach (var currMove in answer)
+                Console.WriteLine(currMove);
+
             Console.Read();
 
         }
