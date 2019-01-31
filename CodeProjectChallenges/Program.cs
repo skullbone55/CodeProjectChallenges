@@ -10,10 +10,24 @@ namespace CodeProjectChallenges
     {
         static void Main(string[] args)
         {
-            RunRook();
-            
+            //RunRook();
+            RunDigitalRiver();
+
+
+
+            Console.Read();
         }
 
+        static void RunDigitalRiver()
+        {
+            long river1 = 32;
+            long river2 = 47;
+
+            var riverPoint = DigitalRiver.BetterGetMeetingPoint(river1, river2);
+            Console.WriteLine(riverPoint);
+
+            return;
+        }
 
         static void RunRook()
         {
