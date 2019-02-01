@@ -11,11 +11,54 @@ namespace CodeProjectChallenges
         static void Main(string[] args)
         {
             //RunRook();
-            RunDigitalRiver();
+            //RunDigitalRiver();
 
+            RunEnigma();
+            /*Dictionary<int, string> Rotars = new Dictionary<int, string>();
+            EnigmaMachine em = new EnigmaMachine(1, Rotars);
 
-
+            Console.WriteLine(em.GetOffsetString(false, "A"));
+            */
             Console.Read();
+        }
+
+        static void RunEnigma()
+        {
+            /*
+            int Shift = 4;
+            Dictionary<int, string> Rotars = new Dictionary<int, string>();
+            Rotars.Add(0, "BDFHJLCPRTXVZNYEIWGAKMUSQO");
+            Rotars.Add(1, "AJDKSIRUXBLHWTMCQGZNPYFVOE");
+            Rotars.Add(2, "EKMFLGDQVZNTOWYHXUSPAIBRCJ");
+
+            var stMessage = "AAA";
+            
+            
+            int Shift = 9;
+            Dictionary<int,string> Rotars = new Dictionary<int, string>();
+            Rotars.Add(0, "BDFHJLCPRTXVZNYEIWGAKMUSQO");
+            Rotars.Add(1, "AJDKSIRUXBLHWTMCQGZNPYFVOE");
+            Rotars.Add(2, "EKMFLGDQVZNTOWYHXUSPAIBRCJ");
+            
+            var stMessage = "EVERYONEISWELCOMEHERE";
+
+            */
+
+            int Shift = 4;
+            Dictionary<int, string> Rotars = new Dictionary<int, string>();
+            Rotars.Add(0, "BDFHJLCPRTXVZNYEIWGAKMUSQO");
+            Rotars.Add(1, "AJDKSIRUXBLHWTMCQGZNPYFVOE");
+            Rotars.Add(2, "EKMFLGDQVZNTOWYHXUSPAIBRCJ");
+            var stMessage = "KQF";
+            bool lgEncode = false;
+
+            EnigmaMachine em = new EnigmaMachine(Shift,Rotars);
+
+            if(lgEncode)
+                Console.WriteLine(em.EncodeMessage(stMessage));
+            else
+                Console.WriteLine(em.DecodeMessage(stMessage));
+
         }
 
         static void RunDigitalRiver()
