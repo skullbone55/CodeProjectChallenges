@@ -44,13 +44,13 @@ namespace CodeProjectChallenges
 
             */
 
-            int Shift = 4;
+            int Shift = 9;
             Dictionary<int, string> Rotars = new Dictionary<int, string>();
             Rotars.Add(0, "BDFHJLCPRTXVZNYEIWGAKMUSQO");
             Rotars.Add(1, "AJDKSIRUXBLHWTMCQGZNPYFVOE");
             Rotars.Add(2, "EKMFLGDQVZNTOWYHXUSPAIBRCJ");
-            var stMessage = "KQF";
-            bool lgEncode = false;
+            var stMessage = "RQ";
+            bool lgEncode = true;
 
             EnigmaMachine em = new EnigmaMachine(Shift,Rotars);
 

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+
 
 namespace CodeProjectChallenges
 {
@@ -27,23 +26,52 @@ namespace CodeProjectChallenges
         public string EncodeMessage(string stMessage)
         {
             var stAnswer = "";
-            var NewString = GetOffsetString(true, stMessage);
+            stMessage = GetOffsetString(true, stMessage);
 
-            for(int x = 0; x < dRotars.Count; x++)
+            for (int x = 0; x < dRotars.Count; x++)
             {
-                NewString = stGetNewString(NewString,x);
-                
+                char[] stInput = stMessage.ToCharArray();
+                var stConsolidate = "";
+                for (int i = 0; i < stInput.Length; i++)
+                {
+                    int inArryPos = (int)stInput[i] - 65;
+                    stConsolidate += dRotars[x][inArryPos];
+                }
+                stMessage = stConsolidate;               
             }
-            stAnswer = NewString.ToString();
+            stAnswer = stMessage;
 
             return stAnswer;
         }
 
         public string DecodeMessage(string stMessage)
         {
-            var stAnswer = "";            
+            var stAnswer = "";
+            var stCurr = "";
 
+            for (var x = this.dRotars.Count - 1;x >= 0; x--)
+            {                
+                for(int i = 0;i < stMessage.Length;i++)
+                {
+                    stCurr += GetCharacterinRotar(stMessage[i], x);
+                }
+                stMessage = stCurr;
+                stCurr = "";
+            }
+            
+            stAnswer = GetOffsetString(false, stMessage);
+            
             return stAnswer;
+        }
+
+        private char GetCharacterinRotar(char chChar, int inRotar)
+        {
+            var chReturn = ' ';
+            for (var i = 0; i < this.dRotars[inRotar].Length;i++)
+                if (chChar == this.dRotars[inRotar][i])
+                    chReturn = (char)(i + 65);
+                
+            return chReturn;
         }
 
         public string GetOffsetString(bool stEncode, string chOrig)
@@ -56,38 +84,28 @@ namespace CodeProjectChallenges
                 if (stEncode)
                     stReturnChar += stGetChar(currChar, inStartNum, inCount);                                   
                 else
-                    stReturnChar += stGetChar(currChar, (inStartNum * -1), inCount);                
+                    stReturnChar += stGetChar(currChar, (inStartNum * -1), (inCount * -1));                
 
                 inCount += 1;
             }
             return stReturnChar;
         }
+
         private char stGetChar(char chChar,int inStartNum, int inCount)
         {
             int intNum = (int)chChar - 65 + inStartNum + inCount;
-            intNum = intNum % 26;
-            
-            return (char)(intNum + 65);
-        }
 
-        private string stGetNewString(string stMessage,int inRotar)
-        {
-            var stReturn = "";
-            char[] stInput = stMessage.ToCharArray();
-
-            for (int i = 0; i < stInput.Length; i++)
+            if (intNum < 0)
             {
-                stReturn += GetNewChar(stInput[i], inRotar);
+                intNum = Math.Abs(intNum) % 26;
+                return (char)(91 - intNum);                
             }
-            return stReturn;
+            else
+            {
+                intNum = intNum % 26;
+                return (char)(intNum + 65);
+            }                                        
         }
 
-        private char GetNewChar(char chOrigChar,int inRoaterNum)
-        {
-            int inArryPos = (int)chOrigChar - 65;
-            var te = dRotars[inRoaterNum];
-
-            return dRotars[inRoaterNum][inArryPos];
-        }
     }
 }

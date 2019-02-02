@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DigitalRiver.cs" />
-    <Compile Include="EnigmaMacine.cs" />
+    <Compile Include="EnigmaMachine.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RookMovement.cs" />
