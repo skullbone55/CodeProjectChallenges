@@ -14,11 +14,7 @@ namespace CodeProjectChallenges
             //RunDigitalRiver();
 
             RunEnigma();
-            /*Dictionary<int, string> Rotars = new Dictionary<int, string>();
-            EnigmaMachine em = new EnigmaMachine(1, Rotars);
 
-            Console.WriteLine(em.GetOffsetString(false, "A"));
-            */
             Console.Read();
         }
 
